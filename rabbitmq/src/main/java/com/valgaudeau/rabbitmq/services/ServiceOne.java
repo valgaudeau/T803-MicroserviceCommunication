@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+
 @Service
 public class ServiceOne {
 
@@ -29,12 +33,19 @@ public class ServiceOne {
 
     public void sendMessage(String message) {
         try {
-            LOGGER.info("Message sent -> {}", message);
+            long sentTimeMillis = System.currentTimeMillis();
+            String sentTimeFormatted = formatMillis(sentTimeMillis);
+            LOGGER.info("Message sent at {} -> {}", sentTimeFormatted, message);
             rabbitTemplate.convertAndSend(exchange, routingKey, message);
         } catch (Exception e) {
             LOGGER.error("Error sending message: {}", e.getMessage(), e);
-            // Rethrow the exception or handle it, will have to see
+            // Rethrow the exception or handle it, as needed
         }
+    }
+
+    private String formatMillis(long millis) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        return sdf.format(new Date(millis));
     }
 
 }
