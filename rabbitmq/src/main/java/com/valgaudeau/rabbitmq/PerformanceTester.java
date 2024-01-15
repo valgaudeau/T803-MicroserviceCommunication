@@ -29,6 +29,8 @@ public class PerformanceTester {
         }
 
         // We have to wait for all messages to be processed
+        // The @RabbitListener annotated method in ServiceTwo is invoked in a separate thread
+        // and operates asynchronously
         while (serviceTwo.getProcessedMessageCount() < numberOfMessages) {
             try {
                 Thread.sleep(1);
