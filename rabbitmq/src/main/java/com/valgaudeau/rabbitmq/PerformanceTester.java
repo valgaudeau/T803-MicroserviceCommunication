@@ -76,7 +76,8 @@ public class PerformanceTester {
                 }
                 Instant userEnd = Instant.now();
                 Duration userDuration = Duration.between(userStart, userEnd);
-                System.out.println("User " + finalI + " - Average Response Time: " + userDuration.dividedBy(messagesPerUser).toMillis() + " milliseconds");
+                System.out.println("User " + finalI + " - Average Response Time: "
+                        + userDuration.dividedBy(messagesPerUser).toMillis() + " milliseconds");
             });
         }
 
