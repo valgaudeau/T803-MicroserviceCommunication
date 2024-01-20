@@ -6,3 +6,4 @@
 *.ipr
 
 .idea/workspace.xml
+.idea/misc.xml
