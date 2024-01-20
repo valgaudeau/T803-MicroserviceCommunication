@@ -21,9 +21,7 @@ public class ServiceOne {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceOne.class);
 
-    // We use the RabbitTemplate to send the messages. Spring Boot will automatically
-    // configure this Bean for us. We just need to inject it with DI and use it
-    private RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     @Autowired
     public ServiceOne(RabbitTemplate rabbitTemplate) {
@@ -35,15 +33,14 @@ public class ServiceOne {
             long sentTimeMillis = System.currentTimeMillis();
             String sentTimeFormatted = formatMillis(sentTimeMillis);
             LOGGER.info("Message sent at {} -> {}", sentTimeFormatted, message);
-            rabbitTemplate.convertAndSend(exchange, routingKey, message);
+            rabbitTemplate.convertAndSend(exchange, routingKey, sentTimeFormatted + " " + message);
         } catch (Exception e) {
             LOGGER.error("Error sending message: {}", e.getMessage(), e);
-            // Rethrow the exception or handle it, as needed
         }
     }
 
     private String formatMillis(long millis) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date(millis));
     }
 

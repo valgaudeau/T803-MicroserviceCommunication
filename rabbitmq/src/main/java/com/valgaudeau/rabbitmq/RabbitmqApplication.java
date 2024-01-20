@@ -21,7 +21,7 @@ public class RabbitmqApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		performanceTester.runTestNumberOfMessages(100);
-		// performanceTester.runTestConcurrentUsers(50);
+		performanceTester.runTestNumberOfMessages(1000);
+		// performanceTester.runTestConcurrentUsers(100);
 	}
 }
